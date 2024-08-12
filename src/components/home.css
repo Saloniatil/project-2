@@ -1,0 +1,152 @@
+.wrrapper{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+link{
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+}
+
+link span{
+  position: relative;
+  z-index: 2;
+}
+
+link:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #ff003b;
+  transition: all .35s;
+}
+
+link:hover{
+  color: #fff;
+}
+
+link:hover:after{
+  width: 100%;
+}
+
+/* Default styles for desktop and larger screens */
+.add-post-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.add-post-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-post-form .form-control {
+  margin-bottom: 15px;
+}
+
+.button--bubble__container {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 90%; /* Expand form width on smaller screens */
+    margin: 0 auto; /* Center the form */
+  }
+
+  .form-container h3 {
+    font-size: 1.5rem; /* Adjust heading size */
+  }
+
+  .form-container .form-label {
+    font-size: 0.9rem; /* Adjust label size */
+  }
+
+  .form-container .form-control {
+    font-size: 0.9rem; /* Adjust input size */
+    padding: 0.5rem; /* Adjust padding */
+  }
+
+  .button--bubble__container {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .button.button--bubble {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem; /* Adjust button text size */
+  }
+}
+
+@media (max-width: 576px) {
+  .form-container {
+    width: 100%; /* Full width on extra small screens */
+  }
+
+  .form-container .form-control {
+    font-size: 0.8rem; /* Smaller input size for extra small screens */
+  }
+
+  .button.button--bubble {
+    padding: 10px;
+    font-size: 0.9rem; /* Smaller button text size */
+  }
+}
+
+/* Default style (Desktop) */
+.textbox {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .textbox {
+    width: 100%;
+    height: auto;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .textbox {
+    width: 100%;
+    height: auto;
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 576px) {
+  .textbox {
+    width: 100%;
+    height: auto;
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+}
+
