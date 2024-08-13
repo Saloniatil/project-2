@@ -6,8 +6,11 @@ import axios from 'axios';
 import Posts from './Posts';
 import Pagination from './Pagination';
 import Addpost from "./Addpost";
-import Add from '@mui/icons-material/Add';
+import Button from '@mui/joy/Button';
+import ButtonGroup from '@mui/joy/ButtonGroup';
+import Divider from '@mui/joy/Divider';
  
+
 
 
 function Home() {
@@ -17,7 +20,7 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(6);
   const [page, setPage] = useState(0); 
-  const limit = 8; 
+  const limit = 5; 
 
 
   useEffect(() => { fetchPosts();}, [page]);
@@ -58,11 +61,28 @@ const handlePrevious = () => {
         paginate={paginate}
         
       />
-
-     
-      <button    onClick={handlePrevious} disabled={page === 0}>Previous</button>
-      <button onClick={handleNext}>  Next  </button> 
-      </div>
+ 
+  
+      <Button sx={{
+    marginRight: '10px', // Add margin to the right to create space
+    fontSize: '12px',
+    padding: '4px 8px',
+    minWidth: 'auto',
+    backgroundColor: 'yellow',
+    color: 'black',
+  }} style={{ backgroundColor: 'yellow', color: 'black', marginLeft: '30%' }} onClick={handlePrevious} disabled={page === 0}>Previous</Button> 
+       
+  <Button sx={{
+    fontSize: '12px',
+    padding: '4px 8px',
+    minWidth: 'auto',
+    backgroundColor: 'yellow',
+    color: 'black',
+  }} onClick={handleNext}>  Next  </Button> 
+      
+      
+    </div>
+    
   )
 }
 

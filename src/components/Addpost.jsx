@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
-import './home.css'
+import Swal from 'sweetalert2';
 import React, { useEffect, useRef, useState } from 'react';
 import { TimelineLite, Elastic, Power4 } from 'gsap';
-import './app.scss'
-import '../components/app.scss'
+import './home.css';
+import './app.scss';
+import '../components/app.scss';
 
 function AddPost() {
   const buttonRef = useRef(null);
   const circlesTopLeftRef = useRef([]);
   const circlesBottomRightRef = useRef([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const $circlesTopLeft = circlesTopLeftRef.current;
@@ -64,8 +65,6 @@ function AddPost() {
       $button.removeEventListener('mouseover', handleMouseOver);
     };
   }, []);
-  ///////////animated button code is upto here //////
-  axios.defaults.withCredentials = true;
 
   const [post, setPost] = useState({
     userId: "",
@@ -74,36 +73,50 @@ function AddPost() {
     body: "",
   });
 
-  const navigate = useNavigate();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log('Submitting Post:', post);  // Log the post data to check what is being submitted
 
+  //   try {
+  //     const result = await axios.post('http://localhost:3032/posts', post);
+  //     // Check if the request was successful
+  //     if (result.status === 201) { // 201 Created
+  //       Swal.fire("Message: Your message was saved successfully").then(() => {
+  //         navigate('/home');  // Navigate to the home page after the alert
+  //       });
+  //     } else {
+  //       Swal.fire('Error', 'Failed to add post', 'error');
+  //     }
+  //   } catch (err) {
+  //     console.error('Error occurred while adding the post:', err);
+  //     Swal.fire('Error', 'An error occurred while adding the post.', 'error');
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Submitting Post:', post);  // Log the post data to check what is being submitted
 
     try {
-      const result = await fetch('http://localhost:3032/posts', {
-        method: 'POST',  // Specify the request method
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(post),  // Convert the `post` object to a JSON string
-      });
-    
-      // Check if the request was successful
-      if (result.status === 201) { // 201 Created
-        navigate('/home');
-      } else {
-        alert('Failed to add post');
-      }
+        const result = await axios.post('http://localhost:3032/posts', post);
+        // Check if the request was successful
+        if (result.status === 201) { // 201 Created
+            Swal.fire({
+                title: "Message",
+                text: "Your message was saved successfully",
+                icon: "success",
+                position: "center",  // Ensure the alert is centered
+                showConfirmButton: true,  // Optionally show the confirm button
+            }).then(() => {
+                navigate('/home');  // Navigate to the home page after the alert
+            });
+        } else {
+            Swal.fire('Error', 'Failed to add post', 'error');
+        }
     } catch (err) {
-      console.error('Error occurred while adding the post:', err);
-      alert('An error occurred while adding the post.');
+        console.error('Error occurred while adding the post:', err);
+        Swal.fire('Error', 'An error occurred while adding the post.', 'error');
     }
-  };
-
-  const handleClick = () => {
-    Swal.fire("Message: Your messae saved Successfully");
-  }
+};
 
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
@@ -146,53 +159,56 @@ function AddPost() {
           </div>
           <div className="col-12">
             <label htmlFor="inputPassword4" className="form-label"><strong>Description:</strong> </label>
-            <textarea  className="textbox" rows="4" cols="96" maxlength="10000"
-              type="text"
+            <textarea
+              className="textbox"
+              rows="4"
+              cols="96"
+              maxLength="10000"
               placeholder="Enter Description"
               autoComplete="off"
               value={post.body}
-              onChange={(e) => setPost({ ...post, body: e.target.value })}>
-            </textarea> 
-          </div>
-          <br></br>
-          <div className="col-12 ">
-            <div  onClick={handleClick} style={{size:"40%"}}>
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="goo">
-        <defs>
-          <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-              result="goo"
+              onChange={(e) => setPost({ ...post, body: e.target.value })}
             />
-            <feComposite in="SourceGraphic" in2="goo" />
-          </filter>
-        </defs>
-      </svg>
+          </div>
+          <br />
+          <div className="col-12 ">
+            <div onClick={handleSubmit} style={{ size: "40%" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="goo">
+                <defs>
+                  <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix
+                      in="blur"
+                      mode="matrix"
+                      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                      result="goo"
+                    />
+                    <feComposite in="SourceGraphic" in2="goo" />
+                  </filter>
+                </defs>
+              </svg>
 
-      <span className="button--bubble__container" ref={buttonRef}>
-        <a href="#campaign" className="button button--bubble">
-           Submit
-        </a>
-        <span className="button--bubble__effect-container">
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <span key={i} className="circle top-left" ref={el => (circlesTopLeftRef.current[i] = el)}></span>
-            ))}
+              <span className="button--bubble__container" ref={buttonRef}>
+                <button type="submit" className="button button--bubble">
+                  Submit
+                </button>
+                <span className="button--bubble__effect-container">
+                  {Array(3)
+                    .fill(0)
+                    .map((_, i) => (
+                      <span key={i} className="circle top-left" ref={el => (circlesTopLeftRef.current[i] = el)}></span>
+                    ))}
 
-          <span className="button effect-button"></span>
+                  <span className="button effect-button"></span>
 
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <span key={i} className="circle bottom-right" ref={el => (circlesBottomRightRef.current[i] = el)}></span>
-            ))}
-        </span>
-      </span>
-       </div>  
+                  {Array(3)
+                    .fill(0)
+                    .map((_, i) => (
+                      <span key={i} className="circle bottom-right" ref={el => (circlesBottomRightRef.current[i] = el)}></span>
+                    ))}
+                </span>
+              </span>
+            </div>
           </div>
         </form>
       </div>
